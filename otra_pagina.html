@@ -37,8 +37,8 @@
     </main>
     <script>
         // Obtener el valor del RUT del formulario
-        const rut = document.getElementById('rut').value;
-        // Mostrar el RUT como el número de cuenta bancaria
+        const rut = window.location.href.split("?rut=")[1]
+       // Mostrar el RUT como el número de cuenta bancaria
         document.getElementById('numero-cuenta').textContent = rut;
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

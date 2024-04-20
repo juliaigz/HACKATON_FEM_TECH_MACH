@@ -1,124 +1,131 @@
 // Función para validar el RUT chileno
 
-// function validarRut(rut) {
-//     // Despejar Puntos
-//     let valor = rut.value.replace('.', '');
-//     // Despejar Guión
-//     valor = valor.replace('-', '');
+function validarRut(rut) {
+    if (!rut.value.includes('-')) {
+        console.log("sin digito verificador")
+        return false;
+    }
 
-//     // Aislar Cuerpo y Dígito Verificador
-//     let cuerpo = valor.slice(0, -1);
-//     let dv = valor.slice(-1).toUpperCase();
+    // Despejar Puntos
+    let valor = rut.value.replace('.', '');
+    // Despejar Guión
+    valor = valor.replace('-', '');
 
-//     // Si no cumple con el mínimo ej. (n.nnn.nnn)
-//     if (cuerpo.length < 7) {
-//         rut.setCustomValidity("RUT Incompleto");
-//         return false;
-//     }
+    // Aislar Cuerpo y Dígito Verificador
+    let cuerpo = valor.slice(0, -1);
+    let dv = valor.slice(-1).toUpperCase();
 
-//     // Calcular Dígito Verificador
-//     let suma = 0;
-//     let multiplo = 2;
+    // Si no cumple con el mínimo ej. (n.nnn.nnn)
+    if (cuerpo.length < 7) {
+        rut.setCustomValidity("RUT Incompleto");
+        return false;
+    }
 
-//     alert("alerta del for del rut")
+    // Calcular Dígito Verificador
+    let suma = 0;
+    let multiplo = 2;
 
-//     // Para cada dígito del Cuerpo
-//       for (let i = 1; i <= cuerpo.length; i++) {
+    console.log("console.log a del for del rut ")
 
-//         // Obtener su Producto con el Múltiplo Correspondiente
-//          let index = multiplo * valor.charAt(cuerpo.length - i);
+    // Para cada dígito del Cuerpo
+      for (let i = 1; i <= cuerpo.length; i++) {
 
-//         // Sumar al Contador General
-//         suma = suma + index;
+        // Obtener su Producto con el Múltiplo Correspondiente
+         let index = multiplo * valor.charAt(cuerpo.length - i);
 
-//         // Consolidar Múltiplo dentro del rango [2,7]
-//         if (multiplo < 7) {
-//             multiplo = multiplo + 1;
-//         } else {
-//             multiplo = 2;
-//         }
-//     }
+        // Sumar al Contador General
+        suma = suma + index;
 
-//     // Calcular Dígito Verificador en base al Módulo 11
-//     let dvEsperado = 11 - (suma % 11);
+        // Consolidar Múltiplo dentro del rango [2,7]
+        if (multiplo < 7) {
+            multiplo = multiplo + 1;
+        } else {
+            multiplo = 2;
+        }
+    }
 
-//     // Casos Especiales (0 y K)
-//     dv = (dv === 'K') ? 10 : dv;
-//     dv = (dv === 11) ? 0 : dv;
+    // Calcular Dígito Verificador en base al Módulo 11
+    let dvEsperado = 11 - (suma % 11);
 
-//     // Validar que el Cuerpo coincide con su Dígito Verificador
-//     if (dvEsperado !== parseInt(dv)) {
-//         rut.setCustomValidity("RUT Inválido");
-//         return false;
-//     }
+    // Casos Especiales (0 y K)
+    dv = (dv === 'K') ? 10 : dv;
+    dv = (dv === 11) ? 0 : dv;
+
+    // Validar que el Cuerpo coincide con su Dígito Verificador
+    if (dvEsperado !== parseInt(dv)) {
+        console.log("RUT Inválido")
+        rut.setCustomValidity("RUT Inválido");
+        return false;
+    }
 
     
 
-//     // Si todo sale bien, eliminar errores (decretar que es válido)
-//     rut.setCustomValidity('');
-//     return true;
-// }
+    // Si todo sale bien, eliminar errores (decretar que es válido)
+    rut.setCustomValidity('');
+    console.log("RUT válido")
+    return true;
+}
 
 
 
 // Función para validar el formulario completo
 async function validarFormulario(event) {
-    alert("hola0")
+    console.log("hola0")
     event.preventDefault(); // Evita que el formulario se envíe automáticamente
     
     // Obtener los valores de los campos del formulario
     const nombre = document.getElementById('nombre').value.trim();
-    alert(nombre)
+    console.log(nombre)
     const apellido = document.getElementById('apellido').value.trim();
-    alert(apellido)
+    console.log(apellido)
     const rut = document.getElementById('rut').value.trim();
-    alert(rut)
+    console.log(rut)
     const telefono = document.getElementById('telefono').value.trim();
-    alert(telefono)
+    console.log(telefono)
     const correo = document.getElementById('correoelectronico').value.trim();
-    alert(correo)
+    console.log(correo)
     const contrasena = document.getElementById('contrasena').value.trim();
-    alert(contrasena)
-    alert("hola1 vamos " )
+    console.log(contrasena)
+    console.log("hola1 vamos " )
     // Validar cada campo
     if (nombre === '' || apellido === '' || rut === '' || telefono === '' || correo === '' || contrasena === '') {
-         alert('Por favor, completa todos los campos.');
+         console.log('Por favor, completa todos los campos.');
         return;
     }
-    alert("hola2")
+    console.log("hola2")
 
     
     //validacion del rut lo hice pero cuando hago que funcione no me corre el programa 
-    //  if (!validarRut(rut)) {
-    //     alert('El RUT ingresado no es válido.');
-    //     return;
-    //  }
+     if (!validarRut(rut)) {
+        console.log('El RUT ingresado no es válido.');
+        return;
+     }
 
-     alert("hola 3")
+     console.log("hola 3")
 
     // Validar el correo electrónico
     const emailValido = validarCorreoElectronico(correo);
     if (!emailValido) {
-        alert('El correo electrónico ingresado no es válido.');
+        console.log('El correo electrónico ingresado no es válido.');
         return;
     }
 
-    alert("hola 4")
+    console.log("hola 4")
 
     // Validar el número de teléfono
     const telefonoValido = validarNumeroTelefono(telefono);
     if (!telefonoValido) {
-        alert('El número de teléfono debe contener solo números.');
+        console.log('El número de teléfono debe contener solo números.');
         return;
     }
 
-    alert("hola 5")
+    console.log("hola 5")
     // Más validaciones si es necesario...
 
     //Si todas las validaciones pasan, redirigir al usuario a otra página
-    window.location.href = 'otra_pagina.html'; // Reemplaza 'otra_pagina.html' con la URL de la página a la que quieres redirigir
+    // window.location.href = 'otra_pagina.html?rut='+rut; // Reemplaza 'otra_pagina.html' con la URL de la página a la que quieres redirigir
 
-    alert("hola 6")
+    console.log("hola 6")
 }
 
 // Función para validar el correo electrónico
@@ -128,7 +135,7 @@ function validarCorreoElectronico(correo) {
     return regexCorreo.test(correo);
 }
 
-alert("hola 7")
+console.log("hola 7")
 
 // Función para validar el número de teléfono
 function validarNumeroTelefono(telefono) {
@@ -136,7 +143,7 @@ function validarNumeroTelefono(telefono) {
     const regexTelefono = /^[0-9]+$/;
     return regexTelefono.test(telefono);
 }
-alert("hola 8")
+console.log("hola 8")
 
 // Escuchar el evento 'click' del botón 'Registrarse'
 //document.querySelector('.boton').addEventListener('click', validarFormulario);
